@@ -1,0 +1,33 @@
+services:
+  dns:
+    image: dns
+    build: services/bind9
+    networks:
+      test-dns:
+        ipv4_address: 173.21.0.2
+
+  host1:
+    image: host
+    build: services/host
+    networks:
+      test-dns:
+        ipv4_address: 173.21.0.3
+    dns:
+      173.21.0.2
+  
+  host2:
+    image: host
+    build: services/host
+    networks:
+      test-dns:
+        ipv4_address: 173.21.0.4
+    dns:
+      173.21.0.2
+
+networks:
+  test-dns:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 173.21.0.0/16
+         gateway: 173.21.0.1
