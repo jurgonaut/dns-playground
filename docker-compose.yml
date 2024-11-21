@@ -2,6 +2,10 @@ services:
   dns:
     image: dns
     build: services/bind9
+    volumes:
+      - ./services/bind9/conf/named.conf.options:/etc/bind/named.conf.options
+      - ./services/bind9/conf/named.conf.local:/etc/bind/named.conf.local
+      - ./services/bind9/conf/db.dns-local-playground.com:/etc/bind/zones/db.dns-local-playground.com
     networks:
       test-dns:
         ipv4_address: 173.21.0.2
